@@ -3,7 +3,7 @@ import os
 import sys
 
 if __name__ == '__main__':
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'SSAD_3003.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CZ3003Django.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
