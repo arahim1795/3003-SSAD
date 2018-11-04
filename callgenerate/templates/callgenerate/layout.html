@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <title>Javarats</title>
+    
+</head>
+<body>
+    <header class="container center-align">
+        <h1>Javarats</h1>
+    </header>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+        <br>
+
+    </div>  
+    <form action="." method="POST">
+        {% csrf_token %}
+        <input type="submit" name="my-form" value="Generate Call" onclick="views.do_something">
+    </form>
+</body>
+</html>
