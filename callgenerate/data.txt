@@ -1,0 +1,5 @@
+John Applesead, S9773032F, 2012-10-12, fire
+Amy Houston, S2234567B, 9/2/2018, road accident
+Inanna Sarkis, S3234567C, 3/10/2018, tsunami
+Kelsey Wells, S4234567D, 9/4/2017, fire
+Tammy Hembrow, S5234567E, 4/3/2018, earthquake
