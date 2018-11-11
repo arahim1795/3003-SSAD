@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Resolve{% endblock %}
+
+{% load widget_tweaks %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active"><a href="{% url 'event:index' %}">Events</a></li>
+  <li class="breadcrumb-item active">{{ event.title }}</li>
+{% endblock %}
+
+{% block content %}
+    <h1>Resolve {{ event.title }}</h1>
+    <form method="post">
+      {% csrf_token %}
+      <strong>Date/Time: </strong>{{ event.date_time }}<br/>
+      <strong>Emergency: </strong>{{ event.get_assist_type_display }}<br/>
+      <strong>Reporter Name: </strong>{{ event.reporter_last }}, {{ event.reporter_first }}<br/>
+      <strong>Contact Number: </strong>{{ event.phone_number}}<br/>
+      <strong>Address: </strong>{{ event.address }}<br/>
+      <strong>Postal Code: </strong>{{ event.postal_code }}<br/>
+      <strong>Info: </strong>
+      {% if event.add_desc %}
+        {{ event.postal_code }}
+      {% else %}
+        -
+      {% endif %}
+      <br />
+      <br />
+      <br />
+      <h5 class="text-danger">
+        Has "{{ object }}" been resolved?
+      </h5>
+      <div style="float:left">
+        <input type="submit" formnovalidate name="back" value="Back" class="btn btn-light"/>
+      </div>
+      <div style="float:left">
+        <input type="submit" value="Resolve" class="btn btn-danger"/>
+      </div>
+    </form>
+{% endblock %}

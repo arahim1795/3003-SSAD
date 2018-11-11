@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active"><a href="{% url 'event:index' %}">Events</a></li>
+  <li class="breadcrumb-item active">{{ event.title }}</li>
+{% endblock %}
+
+{% block content %}
+<style>
+  #map {
+    height:400px;
+    width:100%;
+  }
+</style>
+<div id="map"></div>
+<script>
+  function initMap() {
+    var marker;
+    var map;
+    var options = {
+      zoom:12,
+      center:{lat:{{ event.lat }},lng: {{ event.long }}}
+    }
+    var map = new google.maps.Map(document.getElementById('map'), options);
+
+    {% if user.is_authenticated %}
+      var myLatLng = new google.maps.LatLng({{ event.lat }}, {{ event.long }});
+      contentString = '<<h1> {{ event.title }} </h1>'
+      marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        content:
+          '<p>' +
+            'Reporter: ' +
+            '<strong>{{ event.reporter_last }}, {{ event.reporter_first }}</strong><br/>' +
+            'Contact: ' +
+            '<strong>{{ event.phone_number }}</strong><br/>' +
+            'Type: ' +
+            '<strong>{{ event.get_assist_type_display }}</strong><br/>' +
+            'Address: ' +
+            '<strong>{{ event.address }}</strong><br/>' +
+            'Postal Code: ' +
+            '<strong>{{ event.postal_code }}</strong><br/>' +
+            'Info: ' +
+            {% if event.add_desc %}
+              '<strong>{{ event.add_desc }}</strong>' +
+            {% else %}
+              '<strong>-</strong>' +
+            {% endif %}
+          '</p>'
+      });
+      var infoWindow = new google.maps.InfoWindow();
+      google.maps.event.addListener(
+        marker, 'click', function () {
+          infoWindow.setContent(this.content);
+          infoWindow.open(this.getMap(), this);
+        }
+      );
+    {% else %}
+      var myLatLng = new google.maps.LatLng({{ event.lat }}, {{ event.long }});
+      contentString = '<<h1> {{ event.title }} </h1>'
+      marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        content:
+          '<p>' +
+            'Type: ' +
+            '<strong>{{ event.get_assist_type_display }}</strong><br/>' +
+            'Address: ' +
+            '<strong>{{ event.address }}</strong><br/>' +
+          '</p>'
+      });
+      var infoWindow = new google.maps.InfoWindow();
+      google.maps.event.addListener(
+        marker, 'click', function () {
+          infoWindow.setContent(this.content);
+          infoWindow.open(this.getMap(), this);
+        }
+      );
+    {% endif %}
+  }
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwoGSZg_KbqCiv9Ujk72bl8XYn7hdsnI0&callback=initMap">
+  </script>
+
+  <br/>
+
+  <div style="float:left">
+    <form action="{% url 'event:index' %}">
+      <input type="submit" value="Back" class="btn btn-light"/>
+    </form>
+  </div>
+
+  {% if user.is_authenticated %}
+    <div style="float:left">
+      <form action="{% url 'event:edit' event.id %}">
+        <input type="submit" value="Edit" class="btn btn-info"/>
+      </form>
+    </div>
+    <div style="float:right">
+      <form action="{% url 'event:delete' event.id %}">
+        <input type="submit" value="Resolve" class="btn btn-warning"/>
+      </form>
+    </div>
+  {% endif %}
+
+  <br/>
+  <br/>
+
+  {% if user.is_authenticated %}
+    <strong>Date/Time: </strong>{{ event.date_time }}<br/>
+    <strong>Emergency: </strong>{{ event.get_assist_type_display }}<br/>
+    <strong>Reporter Name: </strong>{{ event.reporter_last }}, {{ event.reporter_first }}<br/>
+    <strong>Contact Number: </strong>{{ event.phone_number}}<br/>
+    <strong>Address: </strong>{{ event.address }}<br/>
+    <strong>Postal Code: </strong>{{ event.postal_code }}<br/>
+    <strong>Info: </strong>
+    {% if event.add_desc %}
+      {{ event.postal_code }}
+    {% else %}
+      -
+    {% endif %}
+  {% else %}
+    <strong>Date/Time:</strong> {{ event.date_time }}<br/>
+    <strong>Address:</strong> {{ event.address }}<br/>
+    <strong>Emergency:</strong> {{ event.get_assist_type_display }}
+  {% endif %}
+{% endblock %}
