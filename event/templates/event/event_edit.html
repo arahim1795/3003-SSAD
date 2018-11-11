@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active"><a href="{% url 'event:index' %}">Events</a></li>
+  <li class="breadcrumb-item active"><a href="{% url 'event:display' event.id %}">{{ event.title }}</a></li>
+  <li class="breadcrumb-item active">Edit</li>
+{% endblock %}
+
+{% block content %}
+    <h1>Update {{ event.title }}</h1>
+    <form method="post">
+      {% csrf_token %}
+      {% include 'includes/form.html' %}
+      <div style="float:left">
+          <input type="submit" formnovalidate name="back" value="Back" class="btn btn-light"/>
+        </div>
+      <div style="float:left">
+        <input type="submit" value="Update" class="btn btn-success"/>
+      </div>
+    </form>
+{% endblock %}

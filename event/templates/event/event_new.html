@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block title %}Report{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active"><a href="{% url 'event:index' %}">Events</a></li>
+  <li class="breadcrumb-item active">New</li>
+{% endblock %}
+
+{% block content %}
+    <h1>Report</h1>
+    <form method="post">
+      {% csrf_token %}
+      {% include 'includes/form.html' %}
+      <div style="float:left">
+        <input type="submit" formnovalidate name="cancel" value="Cancel" class="btn btn-light"/>
+      </div>
+      <div style="float:left">
+        <input type="submit" value="Submit" class="btn btn-success"/>
+      </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,17 @@
+body {
+  background-image: url(tiny-squares.png);
+}
+
+.logo {
+  font-family: 'Poiret One', cursive;
+  font-weight: strong;
+}
+
+.logo a {
+  color: rgba(0,0,0,.9);
+}
+
+.logo a:hover,
+.logo a:active {
+  text-decoration: none;
+}
