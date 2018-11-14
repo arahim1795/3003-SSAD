@@ -5,6 +5,8 @@
 		pip install geopy
 		pip install twilio
 		pip install python-telegram-bot
+		pip install django
+		pip install django-widget-tweaks
 	
 	
 	Running Server Instructions:
