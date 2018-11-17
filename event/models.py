@@ -2,8 +2,8 @@ from datetime import datetime
 from django.db import models
 from django.core.validators import MinLengthValidator, RegexValidator
 from django.urls import reverse  # generate URL by reversing the patterns
-from geopy import geocoders
-from geopy.geocoders import GoogleV3
+# from geopy import geocoders
+# from geopy.geocoders import GoogleV3
 from uuid import uuid4
 
 import json
@@ -29,6 +29,32 @@ def get_address(postal):
         + ' ' + js["results"][0]["ROAD_NAME"]
         + ' ' + js["results"][0]["POSTAL"]
     ).title()
+
+
+def get_lat(postal):
+    url = (
+        "https://developers.onemap.sg/commonapi/search?searchVal="
+        + postal + "&returnGeom=Y&getAddrDetails=Y&pageNum=1"
+    )
+    response = requests.get(url)
+    content = response.content.decode("utf8")
+    js = json.loads(content)
+    return (
+        js["results"][0]["LATITUDE"]
+    )
+
+
+def get_long(postal):
+    url = (
+        "https://developers.onemap.sg/commonapi/search?searchVal="
+        + postal + "&returnGeom=Y&getAddrDetails=Y&pageNum=1"
+    )
+    response = requests.get(url)
+    content = response.content.decode("utf8")
+    js = json.loads(content)
+    return (
+        js["results"][0]["LONGITUDE"]
+    )
 
 
 # Models Here
@@ -77,14 +103,14 @@ class Event(models.Model):
     assist_type = models.CharField(max_length=1, choices=ASSIST)
 
     def save(self, *args, **kwargs):
-        geolocator = geocoders.GoogleV3(
-            api_key='AIzaSyCwoGSZg_KbqCiv9Ujk72bl8XYn7hdsnI0',
-            format_string="%s, Singapore SG"
-        )
-        location = geolocator.geocode(self.postal_code)
+        # geolocator = geocoders.GoogleV3(
+        #     api_key='AIzaSyCwoGSZg_KbqCiv9Ujk72bl8XYn7hdsnI0',
+        #     format_string="%s, Singapore SG"
+        # )
+        # location = geolocator.geocode(self.postal_code)
         self.address = get_address(self.postal_code)
-        self.lat = location.latitude
-        self.long = location.longitude
+        self.lat = get_lat(self.postal_code)
+        self.long = get_long(self.postal_code)
         super(Event, self).save(*args, **kwargs)
 
     # String for representing Event model
