@@ -1,9 +1,9 @@
 3003 SSAD
 
 	Installation Instructions:
-    install Python 3.7.X or above
-    pip install django
-    pip install django-widget-tweaks
+		install Python 3.7.X or above
+		pip install django
+		pip install django-widget-tweaks
 		pip install geopy
 		pip install twilio
 		pip install python-telegram-bot
