@@ -40,6 +40,7 @@
           <div class="collapse navbar-collapse" id="mainMenu">
             {% if user.is_authenticated %}
               <ul class="navbar-nav ml-auto">
+                <a href="{% url 'event:gen' %}" class="btn btn-secondary">Gen Event</a>
                 <a href="{% url 'event:new' %}" class="btn btn-primary ml-2">Add Event</a>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

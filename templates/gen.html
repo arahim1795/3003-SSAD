@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>
+        Crisis Event Generator
+    </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sticky-footer.css' %}">
+  </head>
+
+  <body>
+    <div class="jumbotron">
+      <div class="container">
+        <h1 class="display-3" align="center">
+          <a href="{% url 'event:index' %}">
+            <strong>You Have Generated An Event</strong>
+          </a>
+        </h1>
+        <small class="text-muted d-block" align="center">Click on Title to Return</small>
+      </div>
+    </div>
+  </body>
+
+  <footer class="footer text-center">
+    <div class="container">
+      <span class="text-muted">
+        Crisis Management System, Copyright &copy; 2018
+      </span>
+    </div>
+  </footer>
+
+</html>

@@ -1,9 +1,15 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
 from .models import Event
+
+import loremipsum as lorem
+import names
+import os
+import random
 
 # Integration with Social Media
 from datetime import date
@@ -95,6 +101,46 @@ class EventDelete(LoginRequiredMixin, generic.DeleteView):
             return super(EventDelete, self).post(request, *args, **kwargs)
 
 
+# Generate Random Data
+def gen_random_number():
+    foo1 = ['6', '8', '9']
+    firstDigit = str(random.choice(foo1))
+    foo2 = random.randint(1000000, 9999999)
+    remainDigit = str(foo2)
+    return firstDigit + remainDigit
+
+
+def valid_postal():
+    postal_array = []
+    cur_path = os.getcwd()
+    file_path = os.path.join(cur_path, 'event', 'generatedata', 'postal.txt')
+    with open(file_path, 'r') as file:
+        for line in file:
+            postal_array.append(line)
+
+    postal = random.choice(postal_array)
+    return str(postal).strip()
+
+
+def gen_assist_type():
+    foo = ['A', 'B', 'C', 'D']
+    assist = str(random.choice(foo))
+    return assist
+
+
+def createRandomEvent(request):
+    Event.objects.create(
+        reporter_first=names.get_first_name(),
+        reporter_last=names.get_last_name(),
+        phone_number=gen_random_number(),
+        postal_code=valid_postal(),
+        add_desc=lorem.get_sentence(True),
+        assist_type=gen_assist_type()
+    )
+    return render(request, 'gen.html')
+
+
+# Social Integration
 def sendEmail():
     global timerEmail
     threading.Timer(1800, sendEmail).start()

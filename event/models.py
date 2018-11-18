@@ -19,7 +19,7 @@ def create_title():
 def get_address(postal):
     url = (
         "https://developers.onemap.sg/commonapi/search?searchVal="
-        + postal + "&returnGeom=Y&getAddrDetails=Y&pageNum=1"
+        + postal + "&returnGeom=N&getAddrDetails=Y"
     )
     response = requests.get(url)
     content = response.content.decode("utf8")
@@ -34,7 +34,7 @@ def get_address(postal):
 def get_lat(postal):
     url = (
         "https://developers.onemap.sg/commonapi/search?searchVal="
-        + postal + "&returnGeom=Y&getAddrDetails=Y&pageNum=1"
+        + postal + "&returnGeom=Y&getAddrDetails=N"
     )
     response = requests.get(url)
     content = response.content.decode("utf8")
@@ -47,7 +47,7 @@ def get_lat(postal):
 def get_long(postal):
     url = (
         "https://developers.onemap.sg/commonapi/search?searchVal="
-        + postal + "&returnGeom=Y&getAddrDetails=Y&pageNum=1"
+        + postal + "&returnGeom=Y&getAddrDetails=N"
     )
     response = requests.get(url)
     content = response.content.decode("utf8")
