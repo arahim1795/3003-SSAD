@@ -1,4 +1,8 @@
-import random, time, sched, names, re
+import random
+import re
+import sched
+import time
+
 
 f=open("data.txt", "r")
 data=f.read().splitlines()
@@ -8,7 +12,7 @@ def random_line(lines):
 
 def send_data(name,ic,date,event):
     print("sending data...")
-    
+
 def validate_data(data_line):
     line_list=data_line.split(",")
     print(line_list)
@@ -25,8 +29,8 @@ def validate_data(data_line):
             print("wrong IC format")
     else:
         print("wrong name format. enter alphabets only.")
-        
-   
+
+
 
 s = sched.scheduler(time.time, time.sleep)
 
